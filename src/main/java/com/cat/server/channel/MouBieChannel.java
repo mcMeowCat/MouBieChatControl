@@ -1,5 +1,6 @@
 package com.cat.server.channel;
 
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.chatcontrol.model.SimpleChannel;
 
@@ -21,30 +22,22 @@ public record MouBieChannel(@NotNull String prefix,
     }
 
     /**
-     * 獲取快捷符號
-     * @return 符號
-     */
-    @NotNull
-    public String getPrefix() {
-        return this.prefix;
-    }
-
-    /**
-     * 或去 ChatControl 頻道
-     * @return 頻道
-     */
-    @NotNull
-    public SimpleChannel getChannel() {
-        return this.channel;
-    }
-
-    /**
      * 檢查該訊息是否為該快捷鍵
      * @param prefix 快捷鍵符號
      * @return 是或否
      */
     public boolean checkPrefix(final @NotNull String prefix) {
         return prefix.equalsIgnoreCase(this.prefix);
+    }
+
+    /**
+     * 發送訊息到頻道上
+     * @param sender 發送者
+     * @param message 訊息
+     * @param sendToSelf 是否發送給自己
+     */
+    public void sendMessage(final @NotNull CommandSender sender, final @NotNull String message, final boolean sendToSelf) {
+        this.channel.sendMessage(sender, message, sendToSelf);
     }
 
 }

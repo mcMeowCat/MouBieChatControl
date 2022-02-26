@@ -8,7 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
-import org.mineacademy.chatcontrol.model.SimpleChannel;
 
 /**
  * 有關玩家聊天事件的監聽類
@@ -32,8 +31,7 @@ public final class PlayerChatEvent
             return;
 
         // 如果快捷符號有被找到，則對該頻道發送聊天訊息
-        final SimpleChannel channel = prefixChannel.getChannel();
-        channel.sendMessage(player, message.substring(1), true);
+        prefixChannel.sendMessage(player, message.substring(1), true);
         event.setCancelled(true);
     }
 
