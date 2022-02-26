@@ -21,7 +21,7 @@ public final class ChannelManager {
      * @param channel 頻道
      */
     public void register(final @NotNull MouBieChannel channel) {
-        final @Nullable MouBieChannel prefixChannel = this.getPrefixChannel(channel.getPrefix());
+        final @Nullable MouBieChannel prefixChannel = this.getPrefixChannel(channel.prefix());
         if (prefixChannel == null)
             this.channels.add(channel);
     }
