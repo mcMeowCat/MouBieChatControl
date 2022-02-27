@@ -22,9 +22,9 @@
 package com.cat.server.listener;
 
 import com.cat.server.MouBieCat;
-import com.cat.server.channel.Channel;
-import com.cat.server.channel.Channels;
-import com.cat.server.channel.DefaultChannel;
+import com.cat.server.channel.api.Channel;
+import com.cat.server.channel.api.Channels;
+import com.cat.server.channel.api.DefaultChannel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -102,8 +102,8 @@ public final class PlayerChatEvent
 
         else {
             // 這裡將把訊息帶往預設頻道
-            final Channel defaultChannel = manager.get("");
-            if (defaultChannel instanceof DefaultChannel)
+            final @Nullable DefaultChannel defaultChannel = manager.getDefaultChannel();
+            if (defaultChannel != null)
                 defaultChannel.sendMessage(player, message);
         }
     }

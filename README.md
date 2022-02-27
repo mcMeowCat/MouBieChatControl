@@ -20,7 +20,7 @@ Author: MouBieCat
 The project Development environment info
 <ul>
     <li><a href="https://java.com/zh_TW/">Java JDK</a> - 17.0.2</li>
-    <li><a href="https://papermc.io/">PaperMC</a> - 1.18</li>
+    <li><a href="https://hub.spigotmc.org/javadocs/spigot/">SpigotMC API</a> - 1.18</li>
 </ul>
 
 -------------

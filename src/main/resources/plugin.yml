@@ -1,4 +1,4 @@
-name: ChatControlPlayer
+name: MouBieChatControl
 
 version: '${project.version}'
 api-version: ${plugin.api.version}

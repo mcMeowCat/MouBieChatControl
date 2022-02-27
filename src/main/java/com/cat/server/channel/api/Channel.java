@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.cat.server.channel;
+package com.cat.server.channel.api;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

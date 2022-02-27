@@ -21,6 +21,7 @@
 
 package com.cat.server.channel;
 
+import com.cat.server.channel.api.Channel;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.chatcontrol.model.SimpleChannel;

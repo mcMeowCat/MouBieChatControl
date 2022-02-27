@@ -21,6 +21,7 @@
 
 package com.cat.server.channel;
 
+import com.cat.server.channel.api.DefaultChannel;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.chatcontrol.model.SimpleChannel;
 
@@ -37,7 +38,7 @@ public final class DefaultChannelWrapper
      * @param simpleChannel 頻道
      */
     public DefaultChannelWrapper(final @NotNull SimpleChannel simpleChannel) {
-        super("", simpleChannel);
+        super("default", simpleChannel);
     }
 
     /**

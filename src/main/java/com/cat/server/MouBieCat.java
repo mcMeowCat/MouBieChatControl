@@ -21,9 +21,8 @@
 
 package com.cat.server;
 
-import com.cat.server.channel.ChannelLoader;
 import com.cat.server.channel.ChannelManager;
-import com.cat.server.channel.Channels;
+import com.cat.server.channel.api.Channels;
 import com.cat.server.listener.PlayerChatEvent;
 import com.moubieapi.api.plugin.PluginRegister;
 import com.moubieapi.moubieapi.plugin.MouBiePluginBase;

@@ -19,22 +19,12 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 
-package com.cat.server.channel;
-
-import com.moubieapi.api.manager.Manager;
-import org.jetbrains.annotations.NotNull;
+package com.cat.server.channel.api;
 
 /**
- * 代表頻道管理紀錄器
+ * 代表一個預設發送訊息的頻道包裝器
  * @author MouBieCat
  */
-public interface Channels
-        extends Manager<String, Channel> {
-
-    /**
-     * 根據檔案內容加載頻道
-     * @param loader 加載器
-     */
-    void loadChannels(@NotNull ChannelLoader loader);
-
+public interface DefaultChannel
+        extends Channel {
 }
