@@ -21,26 +21,40 @@
 
 package com.cat.server.channel;
 
-import com.moubieapi.moubieapi.manager.ManagerAbstract;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.mineacademy.chatcontrol.model.SimpleChannel;
 
 /**
- * 代表頻道管理紀錄器
+ * 代表一個頻道
  * @author MouBieCat
  */
-public final class ChannelManager
-        extends ManagerAbstract<String, Channel>
-        implements Channels {
+public interface Channel {
 
     /**
-     * 根據檔案內容加載頻道
-     * @param loader 加載器
+     * 獲取頻道快捷符號
+     * @return 符號
      */
-    public void loadChannels(final @NotNull ChannelLoader loader) {
-        this.manager.clear();
+    @NotNull String getPrefix();
 
-        for (final Channel channel : loader.parsePrefixChannels())
-            this.add(channel.getPrefix(), channel);
-    }
+    /**
+     * 獲取主要頻道實例
+     * @return 頻道
+     */
+    @NotNull SimpleChannel getChannel();
+
+    /**
+     * 發送訊息到頻道上
+     * @param sender 發送者
+     * @param message 訊息
+     */
+    void sendMessage(@NotNull Player sender, @NotNull String message);
+
+    /**
+     * 檢查該訊息是否為該快捷鍵
+     * @param prefix 快捷鍵符號
+     * @return 是或否
+     */
+    boolean checkPrefix(@NotNull String prefix);
 
 }

@@ -21,26 +21,20 @@
 
 package com.cat.server.channel;
 
-import com.moubieapi.moubieapi.manager.ManagerAbstract;
+import com.moubieapi.api.manager.Manager;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * 代表頻道管理紀錄器
  * @author MouBieCat
  */
-public final class ChannelManager
-        extends ManagerAbstract<String, Channel>
-        implements Channels {
+public interface Channels
+        extends Manager<String, Channel> {
 
     /**
      * 根據檔案內容加載頻道
      * @param loader 加載器
      */
-    public void loadChannels(final @NotNull ChannelLoader loader) {
-        this.manager.clear();
-
-        for (final Channel channel : loader.parsePrefixChannels())
-            this.add(channel.getPrefix(), channel);
-    }
+    void loadChannels(@NotNull ChannelLoader loader);
 
 }

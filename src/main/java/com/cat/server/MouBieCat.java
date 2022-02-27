@@ -1,7 +1,29 @@
+/**
+ * LICENSE
+ * MouBieChatControlPlayer
+ * -------------
+ * Copyright (C) 2021 MouBieCat(MouBie_Yuki)
+ * -------------
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ */
+
 package com.cat.server;
 
 import com.cat.server.channel.ChannelLoader;
 import com.cat.server.channel.ChannelManager;
+import com.cat.server.channel.Channels;
 import com.cat.server.listener.PlayerChatEvent;
 import com.moubieapi.api.plugin.PluginRegister;
 import com.moubieapi.moubieapi.plugin.MouBiePluginBase;
@@ -18,13 +40,12 @@ public final class MouBieCat
 
     // 頻道管理器
     @NotNull
-    private final ChannelManager manager = new ChannelManager();
+    private final Channels manager = new ChannelManager();
 
     @PluginRegister(name = "註冊插件檔案", type = PluginRegister.ActionType.ACTION_ENABLE, priority = PluginRegister.ActionPriority.HIGHEST)
     public void registerFiles() {
         // 頻道加載器
-        ChannelLoader loader = new ChannelLoader();
-        this.manager.loadChannels(loader);
+        this.manager.loadChannels(new ChannelLoader());
     }
 
     @PluginRegister(name = "註冊插件事件", type = PluginRegister.ActionType.ACTION_ENABLE)
@@ -35,7 +56,7 @@ public final class MouBieCat
 
     @PluginRegister(name = "重載插件檔案", type = PluginRegister.ActionType.ACTION_RELOAD)
     public void reloadFiles() {
-        this.registerFiles();
+        this.manager.loadChannels(new ChannelLoader());
     }
 
 
@@ -44,7 +65,7 @@ public final class MouBieCat
      * @return 管理器
      */
     @NotNull
-    public ChannelManager getChannelManager() {
+    public Channels getChannelManager() {
         return this.manager;
     }
 
