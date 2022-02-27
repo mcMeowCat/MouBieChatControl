@@ -58,7 +58,7 @@ public final class ChannelLoader extends Loader {
 
         for (final String prefix : configurationSection.getKeys(false)) {
             final String channelName = this.getString("Channels." + prefix);
-            channels.add(new ChannelWrapper(channelName, ChannelSettings.getChannel(channelName)));
+            channels.add(new ChannelWrapper(prefix, ChannelSettings.getChannel(channelName)));
         }
 
         return channels;
