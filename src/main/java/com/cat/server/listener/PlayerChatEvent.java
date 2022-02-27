@@ -46,7 +46,7 @@ public final class PlayerChatEvent
     public void onChat(final @NotNull AsyncPlayerChatEvent event) {
         final Player player = event.getPlayer();
         final String message = event.getMessage();
-        final String prefix = message.substring(1);
+        final String prefix = message.substring(0, 1);
 
         // 獲取玩家前綴頻道快捷符號
         final @Nullable Channel channel =
