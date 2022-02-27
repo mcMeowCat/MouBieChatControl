@@ -56,10 +56,16 @@ public final class ChannelLoader extends Loader {
 
         final List<Channel> channels = new LinkedList<>();
 
+        // 加載快捷符號頻道
         for (final String prefix : configurationSection.getKeys(false)) {
             final String channelName = this.getString("Channels." + prefix);
             channels.add(new ChannelWrapper(prefix, ChannelSettings.getChannel(channelName)));
         }
+
+        // 載入預設頻道
+        final @Nullable String defaultChannel = this.configuration.getString("Default");
+        if (defaultChannel != null)
+            channels.add(new DefaultChannelWrapper(ChannelSettings.getChannel(defaultChannel)));
 
         return channels;
     }

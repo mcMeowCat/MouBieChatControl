@@ -23,6 +23,8 @@ package com.cat.server.listener;
 
 import com.cat.server.MouBieCat;
 import com.cat.server.channel.Channel;
+import com.cat.server.channel.Channels;
+import com.cat.server.channel.DefaultChannel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,16 +50,23 @@ public final class PlayerChatEvent
         final String message = event.getMessage();
         final String prefix = message.substring(0, 1);
 
-        // 獲取玩家前綴頻道快捷符號
-        final @Nullable Channel channel =
-                MouBieCat.getInstance().getChannelManager().get(prefix);
+        final Channels manager = MouBieCat.getInstance().getChannelManager();
 
-        if (channel != null && channel.checkPrefix(prefix)) {
-            // 如果快捷符號有被找到，則對該頻道發送聊天訊息
+        // 獲取玩家前綴頻道快捷符號
+        final @Nullable Channel channel = manager.get(prefix);
+
+        if (channel != null && channel.checkPrefix(prefix))
             channel.sendMessage(player, message.substring(1));
-            event.setCancelled(true);
+
+        else {
+            // 這裡將把訊息帶往預設頻道
+            final Channel defaultChannel = manager.get("");
+            if (defaultChannel instanceof DefaultChannel)
+                defaultChannel.sendMessage(player, message);
         }
 
+        // 無論如何取消事件
+        event.setCancelled(true);
     }
 
 }
