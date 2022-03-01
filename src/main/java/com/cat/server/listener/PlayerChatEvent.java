@@ -32,9 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.chatcontrol.api.CheckResult;
-import org.mineacademy.chatcontrol.api.EventCancelledException;
-import org.mineacademy.chatcontrol.listener.ListenerChecker;
 
 /**
  * 有關玩家聊天事件的監聽類
@@ -52,34 +49,13 @@ public final class PlayerChatEvent
         final Player player = event.getPlayer();
         final String message = event.getMessage();
 
-        if (this.playerChecker(player, message))
-            // 發送訊息
-            this.sendMessage(player, message);
+        // 發送訊息
+        this.sendMessage(player, message);
 
         // 無論如何取消事件
         event.setCancelled(true);
     }
 
-    /**
-     * 檢查玩家是否可以發送訊息
-     * @param player 玩家
-     * @param message 訊息
-     * @return 是否可以
-     */
-    private boolean playerChecker(final @NotNull Player player, final @NotNull String message) {
-        // 建立結果
-        final CheckResult result = new CheckResult(message, player);
-        try {
-            // 檢查結果
-            final @Nullable CheckResult resultBuffer = ListenerChecker.checkMessage(result);
-
-            // 如果原始訊息被修改
-            if (resultBuffer == null || resultBuffer.hasMessageChanged())
-                return false;
-
-        } catch (final EventCancelledException ignored) { return false; }
-        return true;
-    }
 
     /**
      * 發送訊息到指定頻道
@@ -97,14 +73,14 @@ public final class PlayerChatEvent
         final @Nullable Channel channel = manager.get(prefix);
 
         // 如果頻道不為空、檢查快捷符號符合
-        if (channel != null && channel.checkPrefix(prefix))
-            channel.sendMessage(player, message.substring(1));
+        if (channel != null)
+            channel.sendMessage(player, message, true);
 
         else {
             // 這裡將把訊息帶往預設頻道
             final @Nullable DefaultChannel defaultChannel = manager.getDefaultChannel();
             if (defaultChannel != null)
-                defaultChannel.sendMessage(player, message);
+                defaultChannel.sendMessage(player, message, true);
         }
     }
 

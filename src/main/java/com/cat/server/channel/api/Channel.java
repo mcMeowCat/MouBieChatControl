@@ -45,16 +45,25 @@ public interface Channel {
 
     /**
      * 發送訊息到頻道上
-     * @param sender 發送者
+     * @param sender  發送者
      * @param message 訊息
+     * @param needCheck 是否需要進行發言檢查
      */
-    void sendMessage(@NotNull Player sender, @NotNull String message);
+    void sendMessage(final @NotNull Player sender, final @NotNull String message, final boolean needCheck);
 
     /**
      * 檢查該訊息是否為該快捷鍵
-     * @param prefix 快捷鍵符號
+     * @param message 玩家輸入的訊息
      * @return 是或否
      */
-    boolean checkPrefix(@NotNull String prefix);
+    boolean checkPrefix(@NotNull String message);
+
+    /**
+     * 檢查玩家是否可以發送訊息
+     * @param player 玩家
+     * @param message 訊息
+     * @return 是否可以
+     */
+    boolean checkPlayer(@NotNull Player player, @NotNull String message);
 
 }

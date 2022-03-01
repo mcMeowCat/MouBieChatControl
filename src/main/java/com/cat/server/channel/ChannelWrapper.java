@@ -24,6 +24,10 @@ package com.cat.server.channel;
 import com.cat.server.channel.api.Channel;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.mineacademy.chatcontrol.api.CheckResult;
+import org.mineacademy.chatcontrol.api.EventCancelledException;
+import org.mineacademy.chatcontrol.listener.ListenerChecker;
 import org.mineacademy.chatcontrol.model.SimpleChannel;
 
 /**
@@ -35,11 +39,11 @@ public class ChannelWrapper
 
     // 快捷符號
     @NotNull
-    private final String prefix;
+    protected final String prefix;
 
     // 頻道
     @NotNull
-    private final SimpleChannel simpleChannel;
+    protected final SimpleChannel simpleChannel;
 
     /**
      * 建構子
@@ -53,20 +57,44 @@ public class ChannelWrapper
 
     /**
      * 檢查該訊息是否為該快捷鍵
-     * @param prefix 快捷鍵符號
+     * @param message 玩家輸入的訊息
      * @return 是或否
      */
-    public boolean checkPrefix(final @NotNull String prefix) {
-        return prefix.equalsIgnoreCase(this.prefix);
+    public boolean checkPrefix(final @NotNull String message) {
+        final String substring = message.substring(0, this.prefix.length());
+        return prefix.equalsIgnoreCase(substring);
+    }
+
+    /**
+     * 檢查玩家是否可以發送訊息
+     * @param player 玩家
+     * @param message 訊息
+     * @return 是否可以
+     */
+    public boolean checkPlayer(final @NotNull Player player, final @NotNull String message) {
+        // 建立結果
+        final CheckResult result = new CheckResult(message, player);
+        try {
+            // 檢查結果
+            final @Nullable CheckResult resultBuffer = ListenerChecker.checkMessage(result);
+
+            // 如果原始訊息被修改
+            if (resultBuffer == null || resultBuffer.hasMessageChanged())
+                return false;
+
+        } catch (final EventCancelledException ignored) { return false; }
+        return true;
     }
 
     /**
      * 發送訊息到頻道上
      * @param sender  發送者
      * @param message 訊息
+     * @param needCheck 是否需要進行發言檢查
      */
-    public final void sendMessage(final @NotNull Player sender, final @NotNull String message) {
-        this.simpleChannel.sendMessage(sender, message, true);
+    public void sendMessage(final @NotNull Player sender, final @NotNull String message, final boolean needCheck) {
+        if (!needCheck || this.checkPlayer(sender, message) && this.checkPrefix(message))
+            this.simpleChannel.sendMessage(sender, message.substring(this.prefix.length()), true);
     }
 
     /**
@@ -86,5 +114,6 @@ public class ChannelWrapper
     public final SimpleChannel getChannel() {
         return this.simpleChannel;
     }
+
 
 }

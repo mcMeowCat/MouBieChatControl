@@ -22,6 +22,7 @@
 package com.cat.server.channel;
 
 import com.cat.server.channel.api.DefaultChannel;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.chatcontrol.model.SimpleChannel;
 
@@ -43,12 +44,35 @@ public final class DefaultChannelWrapper
 
     /**
      * 檢查該訊息是否為該快捷鍵
-     * @param prefix 快捷鍵符號
-     * @return 預設頻道一律為true
+     * @param message 玩家輸入的訊息
+     * @return 是或否
      */
     @Override
-    public boolean checkPrefix(final @NotNull String prefix) {
+    public boolean checkPrefix(final @NotNull String message) {
         return true;
+    }
+
+    /**
+     * 檢查玩家是否可以發送訊息
+     * @param player 玩家
+     * @param message 訊息
+     * @return 是否可以
+     */
+    @Override
+    public boolean checkPlayer(@NotNull Player player, @NotNull String message) {
+        return super.checkPlayer(player, message);
+    }
+
+    /**
+     * 發送訊息到頻道上
+     * @param sender  發送者
+     * @param message 訊息
+     * @param needCheck 是否需要進行發言檢查
+     */
+    @Override
+    public void sendMessage(@NotNull Player sender, @NotNull String message, boolean needCheck) {
+        if (!needCheck || this.checkPlayer(sender, message) && this.checkPrefix(message))
+            this.simpleChannel.sendMessage(sender, message, true);
     }
 
 }
