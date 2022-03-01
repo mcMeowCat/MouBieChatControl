@@ -57,6 +57,7 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!-- ChatControl PRO -->
         <dependency>
             <groupId>org.mineacademy</groupId>
             <artifactId>ChatControl</artifactId>
